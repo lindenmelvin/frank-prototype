@@ -19,6 +19,6 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit(:serial_number, :latitude, :longitude, :file)
+    params.require(:report).permit(:serial_number, :latitude, :longitude, :photo)
   end
 end
