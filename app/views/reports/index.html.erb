@@ -1,0 +1,11 @@
+<div>
+  <%= link_to "New Report", new_report_path %>
+</div>
+
+<h2>Reports</h2>
+
+<% @reports.each do |report| %>
+  <ul>
+    <li><%= link_to report.created_at, report_path(report) %></li>
+  </ul>
+<% end %>
