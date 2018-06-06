@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2018_06_06_132236) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "reports", force: :cascade do |t|
     t.string "serial_number"
     t.string "photo"
