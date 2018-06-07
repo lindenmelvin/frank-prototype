@@ -16,3 +16,4 @@
 <% end %>
 
 <%= link_to "Edit Report", edit_report_path(@report) %>
+<%= link_to "Delete Report", report_path(@report), data: { confirm: 'Are you sure?'}, method: :delete %>
