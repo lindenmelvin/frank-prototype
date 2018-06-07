@@ -1,4 +1,6 @@
 class Report < ApplicationRecord
+  attr_accessor :map_editable
+
   FIELDS = [
     { name: :name, display: "Name", type: :text_field },
     { name: :email, display: "Email", type: :text_field },
@@ -18,7 +20,10 @@ class Report < ApplicationRecord
     { name: :opening, display: "Opening", type: :text_field },
     { name: :actual, display: "Actual", type: :text_field },
     { name: :notes, display: "Notes", type: :text_area },
+    { name: :latitude, display: "Latitude", type: :hidden_field },
+    { name: :longitude, display: "Longitude", type: :hidden_field },
     { name: :photo, display: "Photo", type: :file_field }
+
   ]
 
   belongs_to :address, dependent: :destroy

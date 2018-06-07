@@ -4,7 +4,7 @@ class ReportsController < ApplicationController
   end
 
   def new
-    @report = Report.new
+    @report = Report.new(map_editable: true)
   end
 
   def create
@@ -15,6 +15,7 @@ class ReportsController < ApplicationController
 
   def edit
     @report = Report.find(params[:id])
+    @report.map_editable = true
   end
 
   def update
@@ -27,6 +28,7 @@ class ReportsController < ApplicationController
 
   def show
     @report = Report.find(params[:id])
+    @report.map_editable = false
   end
 
   def destroy

@@ -16,6 +16,8 @@
   </div>
 <% end %>
 
+<%= render "map", report: @report %>
+
 <% if @report.photo.present? %>
   <div>
     <%= image_tag @report.photo.url %>

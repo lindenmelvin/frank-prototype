@@ -1,0 +1,86 @@
+<div id="map" style="height:500px;width:500px;" data-new-record="<%= report.new_record? %>" data-editable="<%= report.map_editable %>" data-latitude="<%= report.latitude %>" data-longitude="<%= report.longitude %>"></div>
+<script>
+  var map;
+  function initMap() {
+    var markers = [];
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 8
+    });
+    infoWindow = new google.maps.InfoWindow;
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+                            'Error: The Geolocation service failed.' :
+                            'Error: Your browser doesn\'t support geolocation.');
+      infoWindow.open(map);
+    }
+
+    var locationData = document.getElementById('map').dataset;
+
+    if (locationData.latitude && locationData.longitude) {
+      var pos = {
+        lat: parseFloat(locationData.latitude),
+        lng: parseFloat(locationData.longitude)
+      };
+
+      map.setCenter(pos);
+
+      var marker = new google.maps.Marker({
+        position: pos,
+        map: map
+      });
+
+      markers.push(marker)
+
+    } else {
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Location found.');
+          infoWindow.open(map);
+          map.setCenter(pos);
+        }, function() {
+          handleLocationError(true, infoWindow, map.getCenter());
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    }
+
+    if(locationData.editable === "true") {
+      map.addListener('click', function(data) {
+        var confirmation = true;
+
+        if (locationData.newRecord === "false") {
+          confirmation = confirm("Are you sure you want to change location?");
+        }
+
+        if (confirmation) {
+          markers.map(function(marker) { marker.setMap(null); });
+
+          var location = data.latLng;
+          var marker = new google.maps.Marker({
+            position: location,
+            map: map
+          });
+
+          document.getElementById('report_latitude').value = location.lat()
+          document.getElementById('report_longitude').value = location.lng()
+
+          markers.push(marker)
+        }
+      });
+    }
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_API_KEY'] %>&callback=initMap" async defer></script>
