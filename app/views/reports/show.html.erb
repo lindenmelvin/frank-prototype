@@ -24,5 +24,11 @@
   </div>
 <% end %>
 
-<%= link_to "Edit Report", edit_report_path(@report) %>
-<%= link_to "Delete Report", report_path(@report), data: { confirm: 'Are you sure?'}, method: :delete %>
+<p>
+  <%= link_to "Edit Report", edit_report_path(@report) %>
+  <%= link_to "Delete Report", report_path(@report), data: { confirm: 'Are you sure?'}, method: :delete %>
+</p>
+
+<p>
+  <%= link_to "Generate Report", generate_report_path(@report, format: :pdf) %>
+</p>

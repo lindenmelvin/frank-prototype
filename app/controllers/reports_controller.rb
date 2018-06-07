@@ -36,6 +36,21 @@ class ReportsController < ApplicationController
     redirect_to reports_path
   end
 
+  def generate
+    respond_to do |format|
+      format.pdf do
+        report = Report.find(params[:id])
+        form_path = Rails.root.join('app/assets/forms/form.pdf').to_s
+        pdf = Prawn::Document.new(template: form_path)
+        pdf.draw_text report.serial_number, at: [390,390], size: 12
+
+        send_data pdf.render,
+          filename: "report.pdf",
+          type: 'application/pdf'
+      end
+    end
+  end
+
   private
 
   def update_address_params
