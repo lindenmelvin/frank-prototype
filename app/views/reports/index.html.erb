@@ -6,6 +6,6 @@
 
 <% @reports.each do |report| %>
   <ul>
-    <li><%= link_to report.created_at, report_path(report) %></li>
+    <li><%= link_to "#{report.name}, #{report.address.line1}, #{report.created_at.strftime('%m-%d-%Y')}", report_path(report) %></li>
   </ul>
 <% end %>
