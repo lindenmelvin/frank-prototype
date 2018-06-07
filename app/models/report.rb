@@ -11,7 +11,7 @@ class Report < ApplicationRecord
     { name: :serial_number, display: "Serial Number", type: :text_field },
     { name: :valve_type, display: "Type", type: :text_field },
     { name: :meter, display: "Meter", type: :text_field },
-    { name: :time, display: "Time", type: :date_field },
+    { name: :time, display: "Time", type: :datetime_local_field },
     { name: :psi, display: "PSI", type: :number_field },
     { name: :check1, display: "Check 1", type: :text_field },
     { name: :check2, display: "Check 2", type: :text_field },
