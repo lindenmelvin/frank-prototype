@@ -12,6 +12,16 @@ class ReportsController < ApplicationController
     redirect_to report_path(report)
   end
 
+  def edit
+    @report = Report.find(params[:id])
+  end
+
+  def update
+    report = Report.find(params[:id])
+    report.update_attributes(report_params)
+    redirect_to report_path(report)
+  end
+
   def show
     @report = Report.find(params[:id])
   end
@@ -19,6 +29,6 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit(:serial_number, :latitude, :longitude, :photo)
+    params.require(:report).permit(*Report::FIELDS.map { |field| field[:name] })
   end
 end

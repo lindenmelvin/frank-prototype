@@ -2,10 +2,17 @@
 
 <h2>Report <%= @report.created_at %></h2>
 
-<div>
-  Serial Number <%= @report.serial_number %>
-</div>
+<% Report::FIELDS.each do |field| %>
+  <div>
+    <span> <%= field[:display] %> </span>
+    <span> <%= @report.send(field[:name]) %> </span>
+  </div>
+<% end %>
 
-<div>
-  <%= image_tag @report.photo.url %>
-</div>
+<% if @report.photo.present? %>
+  <div>
+    <%= image_tag @report.photo.url %>
+  </div>
+<% end %>
+
+<%= link_to "Edit Report", edit_report_path(@report) %>

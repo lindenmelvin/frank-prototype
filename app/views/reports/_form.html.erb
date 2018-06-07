@@ -1,13 +1,10 @@
 <%= form_for @report do |f| %>
-  <div>
-    <%= f.label :serial_number, "Serial Number" %>
-    <%= f.text_field :serial_number %>
-  </div>
-
-  <div>
-    <%= f.label :photo, "Photo" %>
-    <%= f.file_field :photo %>
-  </div>
+  <% Report::FIELDS.each do |field| %>
+    <div>
+      <%= f.label field[:name], field[:display] %>
+      <%= f.send(field[:type], field[:name]) %>
+    </div>
+  <% end %>
 
   <div>
     <%= f.submit %>
