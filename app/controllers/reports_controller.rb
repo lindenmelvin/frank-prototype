@@ -8,7 +8,8 @@ class ReportsController < ApplicationController
   end
 
   def create
-    report = Report.create(report_params)
+    address = Address.create(new_address_params)
+    report = Report.create(report_params.merge(address: address))
     redirect_to report_path(report)
   end
 
@@ -18,6 +19,8 @@ class ReportsController < ApplicationController
 
   def update
     report = Report.find(params[:id])
+    address = report.address
+    address.update_attributes(update_address_params)
     report.update_attributes(report_params)
     redirect_to report_path(report)
   end
@@ -33,7 +36,21 @@ class ReportsController < ApplicationController
 
   private
 
+  def update_address_params
+    params.require(:address).permit(
+      *Address::FIELDS.map { |field| field[:name] }
+    )
+  end
+
+  def new_address_params
+    params.permit(
+      *Address::FIELDS.map { |field| field[:name] }
+    )
+  end
+
   def report_params
-    params.require(:report).permit(*Report::FIELDS.map { |field| field[:name] })
+    params.require(:report).permit(
+      *Report::FIELDS.map { |field| field[:name] }
+    )
   end
 end

@@ -6,6 +6,15 @@
     </div>
   <% end %>
 
+  <%= fields_for @report.address do |ff| %>
+    <% Address::FIELDS.each do |field| %>
+      <div>
+        <%= ff.label field[:name], field[:display] %>
+        <%= ff.send(field[:type], field[:name]) %>
+      </div>
+    <% end %>
+  <% end %>
+
   <div>
     <%= f.submit %>
   </div>

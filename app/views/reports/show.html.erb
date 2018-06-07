@@ -9,6 +9,13 @@
   </div>
 <% end %>
 
+<% Address::FIELDS.each do |field| %>
+  <div>
+    <span> <%= field[:display] %> </span>
+    <span> <%= @report.address.send(field[:name]) %> </span>
+  </div>
+<% end %>
+
 <% if @report.photo.present? %>
   <div>
     <%= image_tag @report.photo.url %>

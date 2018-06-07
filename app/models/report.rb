@@ -1,5 +1,8 @@
 class Report < ApplicationRecord
   FIELDS = [
+    { name: :name, display: "Name", type: :text_field },
+    { name: :email, display: "Email", type: :text_field },
+    { name: :phone, display: "Phone", type: :text_field },
     { name: :district, display: "District", type: :text_field },
     { name: :location, display: "Location", type: :text_field },
     { name: :make, display: "Make", type: :text_field },
@@ -18,5 +21,7 @@ class Report < ApplicationRecord
     { name: :photo, display: "Photo", type: :file_field }
   ]
 
-   mount_uploader :photo, PhotoUploader
+  belongs_to :address, dependent: :destroy
+  accepts_nested_attributes_for :address
+  mount_uploader :photo, PhotoUploader
 end
